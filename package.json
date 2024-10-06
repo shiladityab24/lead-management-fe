@@ -10,7 +10,7 @@
     "dev:compat": "lwr dev --mode compat",
     "build": "lwr build --clean",
     "build:prod-compat": "lwr build --clean --mode prod-compat",
-    "start": "lwr start",
+    "start": "WARMUP=true lwr start",
     "stage": "yarn build && yarn start",
     "stage:prod-compat": "yarn build:prod-compat && yarn start"
   },
@@ -23,7 +23,7 @@
     "lwr": "0.10.10"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=16.0.0"
   },
   "volta": {
     "node": "18.16.1"
