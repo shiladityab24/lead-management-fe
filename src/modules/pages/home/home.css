@@ -1,0 +1,14 @@
+.wrapper{
+    background-color: #002249;
+}
+th{
+    background-color: #fd8802;
+    color: #fff;
+    padding: 8px;
+}
+td{
+    padding: 8px;
+}
+tr:nth-child(even){
+    background-color: #d6974fe8;
+}

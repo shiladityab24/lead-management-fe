@@ -1,0 +1,104 @@
+<template>
+    <template lwc:if={showSpinner}>
+        <components-loader></components-loader>
+    </template>
+    <components-navbar logged-in-user={loggedInUser} backend-url={backendUrl}></components-navbar>
+    <div class="slds-p-around_large wrapper">
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12" padding="around-small">
+                <div class="slds-text-align_right">
+                    <lightning-button variant="brand" label="Add Lead" icon-name="utility:add" onclick={addExpense}>
+                    </lightning-button>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12" padding="around-small">
+                <lightning-card title="Lead Details">
+                    <components-datatable records={leadRecords}
+                    onedit={editHandler}
+                    ondelete={deleteHandler}></components-datatable>
+                </lightning-card>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="around-small">
+                <lightning-card title="Lead Source Chart View">
+                    <template lwc:if={chartData}>
+                        <components-chartbox chart-records={chartData}></components-chartbox>
+                    </template>
+                </lightning-card>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="8" padding="around-small">
+                <lightning-card title="Lead Source Table View">
+                    <div class="slds-p-around_large">
+                        <table>
+                            <thead>
+                                <th>No</th>
+                                <th>Lead Source</th>
+                                <th>Total Loan Amount Requested</th>
+                            </thead>
+                            <tbody>
+                                <template for:each={leadSourceTableData} for:item="item">
+                                    <tr key={item.id}>
+                                        <td>{item.id}</td>
+                                        <td>{item.leadsource}</td>
+                                        <td>{item.amount}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+    <template lwc:if={showModal}>
+        <components-my-modal heading={modalActionLabel}>
+            <form>
+                    <lightning-input type="text" label="First Name" class="validate"
+                    required name="FirstName" value={formData.FirstName} onchange={changeHandler}>
+                    </lightning-input>
+
+                    <lightning-input type="text" label="Last Name" class="validate"
+                    required name="LastName" value={formData.LastName} onchange={changeHandler}>
+                    </lightning-input>
+                    
+                    <lightning-input type="text" label="Pan Number" class="validate"
+                    required name="Pan_Number__c" value={formData.Pan_Number__c} onchange={changeHandler}>
+                    </lightning-input>
+                    
+                    <lightning-input type="text" label="Company" class="validate"
+                    required name="Company" value={formData.Company} onchange={changeHandler}>
+                    </lightning-input>
+                    
+                    <lightning-input type="text" label="Mobile" class="validate"
+                    required name="MobilePhone" value={formData.MobilePhone} onchange={changeHandler}>
+                    </lightning-input>
+                    
+                    <lightning-input type="number" label="Loan Amount Requested" class="validate"
+                    required name="Amount__c" value={formData.Amount__c} onchange={changeHandler}>
+                    </lightning-input>
+                    
+                    <lightning-input type="date" label="Date" class="validate"
+                    required name="Date__c" value={formData.Date__c} onchange={changeHandler}>
+                    </lightning-input>
+                    
+                    <lightning-combobox 
+                    name="LeadSource"
+                    label="Lead Source"
+                    value={formData.LeadSource}
+                    options={leadSourceOptions}
+                    required
+                    onchange={changeHandler} class="validate">
+                    </lightning-combobox>
+
+                    <lightning-textarea name="Description" label="Description" class="validate"
+                    value={formData.Description} onchange={changeHandler}></lightning-textarea>
+            </form>
+            <div slot="footer">
+                <button class="slds-button slds-button_neutral" onclick={cancelHandler}>Cancel</button>
+                <button class="slds-button slds-button_brand" onclick={saveHandler}>{modalActionLabel}</button>
+            </div>
+        </components-my-modal>
+    </template>
+   
+   
+</template>
